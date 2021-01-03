@@ -111,6 +111,8 @@ The same board can serve different purposes, for example, in the robotic arm we 
 
 The encoder gives 12 points per turn, which must be multiplied by the reduction to know how many pulses per turn they give.
 
+![](./Electronics/pictures/boards.jpg)
+
 If you need more powerful motors or those that require a greater workload, there is a version of these servos with an independent power supply from the motors.
 
-![](./Electronics/pictures/boards.png)
+
