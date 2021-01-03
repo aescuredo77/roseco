@@ -1,0 +1,45 @@
+camera:
+  mass: 0.2
+  x_size: 0.04964
+  y_size: 0.03950
+  z_size: 0.02639
+  mesh: 'camera.stl'
+  x_offset: 0.0014
+  y_offset: -0.1325
+  z_offset: 0.0
+  x_joint: -0.26
+  y_joint: -0.0475
+  z_joint: 0.0
+
+line_sensor:
+  mass: 0.1
+  x_size: 0.05026
+  y_size: 0.02826
+  z_size: 0.02160
+  mesh: 'line_sensor.stl'
+  x_offset: 0.00232
+  y_offset: 0.06610
+  z_offset: 0.00181
+  x_joint: 0.0
+  y_joint: 0.0
+  z_joint: 0.0
+
+gpu_laser:
+  mass: 0.1
+  radius: 0.015
+  lenght: 0.01
+  mesh: 'rplidar-a2.stl'
+  x_offset: 0.0
+  y_offset: 0.0
+  z_offset: 0.068
+  dx: 0.0
+  dy: 0.0
+  dz: 0.04
+  x_joint: 0.26
+  y_joint: 0.18
+  z_joint: 0.05
+  angular_range:
+    min: -3.1415
+    max: 3.1415
+  
+

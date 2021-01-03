@@ -1,0 +1,104 @@
+base:
+  mass: 0.5
+  x_size: 0.07660
+  y_size: 0.11282
+  z_size: 0.02654
+  mesh: 'eco_base.stl'
+  x_offset: -0.26 #-0.03941
+  y_offset: -0.18 #0.04716
+  z_offset: 0.0 #0.01831
+  x_joint: 0.26
+  y_joint: 0.18
+  z_joint: 0.0
+
+
+caster_wheel:
+  mass: 0.1
+  radius: 0.005
+  #lenght: 0.005    is a sphere
+  mesh: 'loca.stl'
+  x_offset: 0.0
+  y_offset: 0.0 #0.03747
+  z_offset: 0.0 #-0.0015
+  x_joint: 0.00075
+  y_joint: 0.039 #0.019
+  z_joint: 0.007 #0.0045
+
+
+chassis:
+  mass: 0.4
+  x_size: 0.11183
+  y_size: 0.13610
+  z_size: 0.05244
+  mesh: 'eco_chassis.stl'
+  x_offset: -0.26
+  y_offset: -0.18 #0.0208
+  z_offset: -0.02 #0.0149
+  x_joint: 0.0
+  y_joint: 0.0
+  z_joint: 0.02
+
+electronics:
+  mass: 0.4
+  x_size: 0.054
+  y_size: 0.068
+  z_size: 0.03056
+  mesh: 'eco_electronics.stl'
+  x_offset: -0.26 #0.00225
+  y_offset: -0.18 #-0.00574
+  z_offset: -0.04 #0.02629
+  x_joint: 0.0
+  y_joint: 0.0
+  z_joint: 0.04
+
+left_motor:
+  mass: 0.4
+  x_size: 0.04487
+  y_size: 0.03980
+  z_size: 0.03819
+  mesh: 'motorL.stl'
+  x_offset: -0.26
+  y_offset: -0.1325 #0.04757
+  z_offset: -0.02 #0.01789
+  x_joint: 0.0
+  y_joint: -0.0475 #-0.02375
+  z_joint: 0.02
+
+left_wheel:
+  mass: 0.2
+  radius: 0.03
+  lenght: 0.008
+  mesh: 'wheelL.stl'
+  x_offset: -0.305 #-0.03941
+  y_offset: -0.1325 #0.04716
+  z_offset: -0.0315 #0.01831
+  x_joint: 0.045 #0.0225 #0.31
+  y_joint: 0.0 #0.1326
+  z_joint: 0.0107 #0.0305
+
+right_motor:
+  mass: 0.4
+  x_size: 0.4487
+  y_size: 0.03980
+  z_size: 0.03819
+  mesh: 'motorR.stl'
+  x_offset: -0.26
+  y_offset: -0.1325 #0.04757
+  z_offset: -0.02 #0.01789
+  x_joint: 0.0
+  y_joint: -0.0475 #-0.02375
+  z_joint: 0.02
+  
+
+right_wheel:
+  mass: 0.2
+  radius: 0.03
+  lenght: 0.008
+  mesh: 'wheelR.stl'
+  x_offset: -0.219 #0.03941
+  y_offset: -0.1325 #0.04716
+  z_offset: -0.0315 #0.01831
+  x_joint: -0.041 #-0.0205 #0.213
+  y_joint: 0.0 #0.1326
+  z_joint: 0.0107 #-0.00465 #0.03
+

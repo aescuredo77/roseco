@@ -1,0 +1,7 @@
+roseco:
+  gazebo_ros_control:
+    pid_gains:
+      right_wheel_joint:
+        {p: 1.5, i: 0, d: 0}
+      left_wheel_joint:
+        {p: 1.5, i: 0, d: 0}

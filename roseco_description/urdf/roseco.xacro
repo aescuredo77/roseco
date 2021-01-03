@@ -1,0 +1,548 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="roseco">
+    <material name="blue">
+        <color rgba="0 0 0.8 1"/>
+    </material>
+    <material name="black">
+        <color rgba="0 0 0 1"/>
+    </material>
+    <material name="white">
+        <color rgba="1 1 1 1"/>
+    </material>
+    <material name="red">
+        <color rgba="1.0 0.0 0.0 1.0"/>
+    </material>
+    <material name="green">
+        <color rgba="0.0 0.82 0.0 1"/>
+    </material>
+    <material name="dark_grey">
+        <color rgba="0.3 0.3 0.3 1"/>
+    </material>
+    <material name="nocolor">
+        <color rgba="0.0 0.0 0.0 0"/>
+    </material>
+    
+    <xacro:include filename="$(find roseco_description)/urdf/roseco.gazebo.xacro" />
+    <xacro:property name="ecobot_yaml" value="$(find roseco_description)/config/ecobot.yaml"/>
+    <xacro:property name="ecobot_props" value="${load_yaml(ecobot_yaml)}"/>
+    <xacro:property name="sensor_yaml" value="$(find roseco_description)/config/sensors.yaml" />
+    <xacro:property name="sensor_props" value="${load_yaml(sensor_yaml)}"/>    
+
+
+    <xacro:property name="PI" value="3.1415926535897931"/>
+    
+    <xacro:property name="radius_wheel" value="${ecobot_props['left_wheel']['radius']}"/>
+    <xacro:property name="lenght_wheel" value="${ecobot_props['left_wheel']['lenght']}"/> 
+    <xacro:property name="o_xyz" value="0.0 0.0 0.0"/>
+    <xacro:property name="o_base_xyz" value="${ecobot_props['base']['x_offset']} ${ecobot_props['base']['y_offset']} ${ecobot_props['base']['z_offset']}"/>
+    <xacro:property name="o_left_wheel_xyz" value="${ecobot_props['left_wheel']['x_offset']} ${ecobot_props['left_wheel']['y_offset']} ${ecobot_props['left_wheel']['z_offset']}"/>
+    <xacro:property name="o_right_wheel_xyz" value="${ecobot_props['right_wheel']['x_offset']} ${ecobot_props['right_wheel']['y_offset']} ${ecobot_props['right_wheel']['z_offset']}"/>
+    <xacro:property name="o_left_motor_xyz" value="${ecobot_props['left_motor']['x_offset']} ${ecobot_props['left_motor']['y_offset']} ${ecobot_props['left_motor']['z_offset']}"/>
+    <xacro:property name="o_right_motor_xyz" value="${ecobot_props['right_motor']['x_offset']} ${ecobot_props['right_motor']['y_offset']} ${ecobot_props['right_motor']['z_offset']}"/>
+    <xacro:property name="o_caster_wheel_xyz" value="${ecobot_props['caster_wheel']['x_offset']} ${ecobot_props['caster_wheel']['y_offset']} ${ecobot_props['caster_wheel']['z_offset']}"/>
+    <xacro:property name="o_chassis_xyz" value="${ecobot_props['chassis']['x_offset']} ${ecobot_props['chassis']['y_offset']} ${ecobot_props['chassis']['z_offset']}"/>
+    <xacro:property name="o_electronics_xyz" value="${ecobot_props['electronics']['x_offset']} ${ecobot_props['electronics']['y_offset']} ${ecobot_props['electronics']['z_offset']}"/>
+    <xacro:property name="caster_wheel_xyz" value="${ecobot_props['caster_wheel']['x_offset']} ${ecobot_props['caster_wheel']['y_offset']} ${ecobot_props['caster_wheel']['z_offset']}"/>
+    <xacro:property name="laser_xyz" value="${sensor_props['gpu_laser']['x_offset']} ${sensor_props['gpu_laser']['y_offset']} ${sensor_props['gpu_laser']['z_offset']}"/>
+    <xacro:property name="camera_xyz" value="${sensor_props['camera']['x_offset']} ${sensor_props['camera']['y_offset']} ${sensor_props['camera']['z_offset']}"/>
+    
+    <xacro:property name="joint_base_xyz" value="${ecobot_props['base']['x_joint']} ${ecobot_props['base']['y_joint']} ${ecobot_props['base']['z_joint']}"/>
+    <xacro:property name="joint_left_wheel_xyz" value="${ecobot_props['left_wheel']['x_joint']} ${ecobot_props['left_wheel']['y_joint']} ${ecobot_props['left_wheel']['z_joint']}"/>
+    <xacro:property name="joint_right_wheel_xyz" value="${ecobot_props['right_wheel']['x_joint']} ${ecobot_props['right_wheel']['y_joint']} ${ecobot_props['right_wheel']['z_joint']}"/>
+    <xacro:property name="joint_left_motor_xyz" value="${ecobot_props['left_motor']['x_joint']} ${ecobot_props['left_motor']['y_joint']} ${ecobot_props['left_motor']['z_joint']}"/>
+    <xacro:property name="joint_right_motor_xyz" value="${ecobot_props['right_motor']['x_joint']} ${ecobot_props['right_motor']['y_joint']} ${ecobot_props['right_motor']['z_joint']}"/>
+    <xacro:property name="joint_caster_wheel_xyz" value="${ecobot_props['caster_wheel']['x_joint']} ${ecobot_props['caster_wheel']['y_joint']} ${ecobot_props['caster_wheel']['z_joint']}"/>
+    <xacro:property name="joint_chassis_xyz" value="${ecobot_props['chassis']['x_joint']} ${ecobot_props['chassis']['y_joint']} ${ecobot_props['chassis']['z_joint']}"/>
+    <xacro:property name="joint_electronics_xyz" value="${ecobot_props['electronics']['x_joint']} ${ecobot_props['electronics']['y_joint']} ${ecobot_props['electronics']['z_joint']}"/>
+    <xacro:property name="joint_caster_wheel_xyz" value="${ecobot_props['caster_wheel']['x_joint']} ${ecobot_props['caster_wheel']['y_joint']} ${ecobot_props['caster_wheel']['z_joint']}"/>
+    <xacro:property name="joint_laser_xyz" value="${sensor_props['gpu_laser']['x_joint']} ${sensor_props['gpu_laser']['y_joint']} ${sensor_props['gpu_laser']['z_joint']}"/>
+    <xacro:property name="joint_camera_xyz" value="${sensor_props['camera']['x_joint']} ${sensor_props['camera']['y_joint']} ${sensor_props['camera']['z_joint']}"/>
+    <!--world + base_link-->
+
+    <xacro:macro name="base" params="origin_xyz origin_rpy joint_xyz o_xyz m x y z mesh material">
+        
+        <!--<link name="aux_link$">
+            <visual>
+                <geometry>
+                    <cylinder radius="0.015" length="0.001"/>
+                </geometry>
+                <material name="${material}"/>
+                <origin xyz="${joint_xyz}" rpy="0.0 0.0 0.0"/>
+            </visual>
+        </link>
+        -->
+        <link name="base_footprint"/>
+        <joint name="base_footprint_joint" type="fixed">
+            <parent link="base_footprint"/>
+            <child link="base_link" />
+            <origin xyz="${joint_base_xyz}" rpy="0.0 0.0 0.0" />
+        </joint>
+        <link name="base_link">
+            <inertial>
+                <mass value="${m}"/>
+                <inertia ixx="${m / 12.0 * (y*y + z*z)}" ixy="0.0" ixz="0.0"
+                        iyy="${m / 12.0 * (x*x + z*z)}" iyz="0.0" 
+                        izz="${m / 12.0 * (x*x + y*y)}"/>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+            </inertial>
+            <visual>
+                <origin xyz="${origin_xyz}" rpy="${origin_rpy}" />
+                <geometry>
+                    <mesh filename="package://roseco_description/meshes/roseco/${mesh}" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="${material}"/>
+            </visual>
+            <collision>
+                <origin xyz="${origin_xyz}" rpy="${origin_rpy}" />
+                <geometry>
+                    <mesh filename="package://roseco_description/meshes/roseco/${mesh}" scale="0.001 0.001 0.001"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="base_link">
+            <material>Gazebo/SkyBlue</material>
+            <turnGravityOff>false</turnGravityOff>
+        </gazebo>
+    </xacro:macro>
+
+
+    <xacro:base origin_xyz = "${o_base_xyz}"
+    origin_rpy= "0.0 0.0 0.0"
+    joint_xyz = "${joint_base_xyz}"
+    o_xyz ="${o_xyz}"
+    m="${ecobot_props['base']['mass']}"
+    x="${ecobot_props['base']['x_size']}"
+    y="${ecobot_props['base']['y_size']}"
+    z="${ecobot_props['base']['z_size']}"
+    mesh="${ecobot_props['base']['mesh']}"
+    material="blue"/>
+    <!-- origin_xyz = "${ecobot_props['base']['x_offset']} ${ecobot_props['base']['y_offset']} ${ecobot_props['base']['z_offset'] - ecobot_props['left_wheel']['radius'] - ecobot_props['left_wheel']['z_offset']} "-->
+    <!--Xacro:macro to the parts joint to base_link-->
+
+    <xacro:macro name="fixed" params="prefix origin_xyz origin_rpy joint_xyz m x y z mesh material">
+        <!--<joint name="joint_aux${prefix}" type="fixed">
+            <origin xyz="${joint_xyz}" rpy="0.0 0.0 0.0"/>
+            <parent link="base_link"/>
+            <child link="aux_link${prefix}"/>
+        </joint>
+        
+        <link name="aux_link${prefix}">
+            <visual>
+                <geometry>
+                    <cylinder radius="0.015" length="0.001"/>
+                </geometry>
+                <material name="${material}"/>
+                <origin xyz="${joint_xyz}" rpy="0.0 0.0 0.0"/>
+            </visual>
+        </link>
+        -->
+        <link name="${prefix}_link">
+            <inertial>
+                <mass value="${m}"/>
+                <inertia ixx="${m / 12.0 * (y*y + z*z)}" ixy="0.0" ixz="0.0"
+                        iyy="${m / 12.0 * (x*x + z*z)}" iyz="0.0" 
+                        izz="${m / 12.0 * (x*x + y*y)}"/>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+            </inertial>
+            <visual>
+                <origin xyz="${origin_xyz}" rpy="${origin_rpy}"/>
+                <geometry>
+                    <mesh filename="package://roseco_description/meshes/roseco/${mesh}" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="${material}"/>
+            </visual>
+            <collision>
+                <origin xyz="${origin_xyz}" rpy="${origin_rpy}" />
+                <geometry>
+                    <mesh filename="package://roseco_description/meshes/roseco/${mesh}" scale="0.001 0.001 0.001"/>
+                </geometry>
+            </collision>
+        </link>
+        <joint name="${prefix}_joint" type="fixed">
+            <parent link="base_link"/>
+            <child link="${prefix}_link"/>
+            <origin xyz="${joint_xyz}" rpy="${origin_rpy}" />
+            <axis xyz="1 0 0" rpy="0 0 0" />
+        </joint>
+        <gazebo reference="${prefix}_link">
+            <material>Gazebo/SkyBlue</material>
+            <turnGravityOff>false</turnGravityOff>
+        </gazebo>
+    </xacro:macro>
+
+
+    <xacro:fixed prefix= "electronics" 
+    origin_xyz= "${o_electronics_xyz}"
+    origin_rpy= "0.0 0.0 0.0"
+    joint_xyz = "${joint_electronics_xyz}" 
+    m= "${ecobot_props['electronics']['mass']}"
+    x= "${ecobot_props['electronics']['x_size']}"  
+    y= "${ecobot_props['electronics']['y_size']}"   
+    z= "${ecobot_props['electronics']['z_size']}"
+    mesh= "${ecobot_props['electronics']['mesh']}"
+    material="green"/>
+
+
+    <xacro:fixed prefix= "chassis" 
+    origin_xyz= "${o_chassis_xyz}"
+    origin_rpy= "0.0 0.0 0.0"
+    joint_xyz = "${joint_chassis_xyz}" 
+    m= "${ecobot_props['chassis']['mass']}"
+    x= "${ecobot_props['chassis']['x_size']}"  
+    y= "${ecobot_props['chassis']['y_size']}"   
+    z= "${ecobot_props['chassis']['z_size']}"
+    mesh= "${ecobot_props['chassis']['mesh']}"
+    material="white"/>
+    
+
+    <xacro:fixed prefix= "left_motor" 
+    origin_xyz= "${o_left_motor_xyz}"
+    origin_rpy= "0.0 0.0 0.0"
+    joint_xyz = "${joint_left_motor_xyz}" 
+    m= "${ecobot_props['left_motor']['mass']}"
+    x= "${ecobot_props['left_motor']['x_size']}"  
+    y= "${ecobot_props['left_motor']['y_size']}"   
+    z= "${ecobot_props['left_motor']['z_size']}"
+    mesh= "${ecobot_props['left_motor']['mesh']}"
+    material="black"/>
+    
+    <xacro:fixed prefix= "right_motor" 
+    origin_xyz= "${o_right_motor_xyz}"
+    origin_rpy= "0.0 0.0 0.0"
+    joint_xyz = "${joint_right_motor_xyz}" 
+    m= "${ecobot_props['right_motor']['mass']}"
+    x= "${ecobot_props['right_motor']['x_size']}"  
+    y= "${ecobot_props['right_motor']['y_size']}"   
+    z= "${ecobot_props['right_motor']['z_size']}"
+    mesh= "${ecobot_props['right_motor']['mesh']}"
+    material="black"/>
+
+    <!--Xacro:macro to the wheels joint to motors-->
+
+    <xacro:macro name="wheel" params="prefix parent origin_xyz origin_rpy joint_xyz r l m mesh material">
+               
+       <!--<joint name="joint_aux${prefix}" type="fixed">
+            <origin xyz="${joint_xyz}" rpy="0.0 0.0 0.0"/>
+            <parent link="${parent}"/>
+            <child link="aux_link${prefix}"/>
+        </joint>
+           
+           <link name="aux_link${prefix}">
+            <visual>
+                <geometry>
+                    <cylinder radius="0.0115" length="0.001"/>
+                </geometry>
+                <material name="white"/>
+                <origin xyz="${joint_xyz}" rpy="0.0 ${PI/2} 0.0"/>
+            </visual>
+        </link>
+      -->
+        <link name="${prefix}_wheel_link">
+            <inertial>
+                <mass value="${m}"/>
+                <inertia ixx="${m*(3*r*r+l*l)/12}" ixy = "0" ixz = "0" 
+                        iyy="${m*(3*r*r+l*l)/12}" iyz = "0" izz="${m*r*r/2}"/>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            </inertial>
+            <visual>
+                <origin xyz="${origin_xyz}" rpy="${origin_rpy}"/>
+                <geometry>
+                    <mesh filename="package://roseco_description/meshes/roseco/${mesh}" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="${material}"/>
+            </visual>
+            <collision>
+                <origin xyz="${origin_xyz}" rpy="${origin_rpy}"/>
+                <geometry>
+                    <mesh filename="package://roseco_description/meshes/roseco/${mesh}" scale="0.001 0.001 0.001"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="${prefix}_wheel_link">
+            <mu1 value="1.0"/>
+            <mu2 value="1.0"/>
+            <kp value="10000000.0"/>
+            <kd value="1.0"/>
+            <fdir1 value="1 0 0"/>
+            <material>Gazebo/Grey</material>
+            <turnGravityOff>false</turnGravityOff>
+        </gazebo>
+        <joint name="${prefix}_wheel_joint" type="continuous">
+            <origin xyz="${joint_xyz}" rpy="${origin_rpy}"/>
+            <parent link="${parent}"/>
+            <child link="${prefix}_wheel_link"/>
+            <axis xyz="1.0 0.0 0.0"/>
+            <!--<limit lower="-3.1415" upper="3.1415" effort="30.0" velocity="1.0"/>-->
+        </joint>
+        <transmission name="${prefix}_wheel_transmission">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}_wheel_joint">
+                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}_motor_link">
+                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+        
+    </xacro:macro>
+
+    <xacro:wheel prefix="left"
+    parent= "left_motor_link"
+    origin_xyz="${o_left_wheel_xyz}"
+    origin_rpy= "0.0 0.0 0.0"
+    joint_xyz = "${joint_left_wheel_xyz}"
+    r="${ecobot_props['left_wheel']['radius']}"
+    l="${ecobot_props['left_wheel']['lenght']}"
+    m="${ecobot_props['left_wheel']['mass']}"
+    mesh ="${ecobot_props['left_wheel']['mesh']}"
+    material= "red"/>
+    
+
+    <xacro:wheel prefix="right"
+    parent= "right_motor_link"
+    origin_xyz="${o_right_wheel_xyz}"
+    origin_rpy= "0.0 0.0 0.0"
+    joint_xyz = "${joint_right_wheel_xyz}"
+    r="${ecobot_props['right_wheel']['radius']}"
+    l="${ecobot_props['right_wheel']['lenght']}"
+    m="${ecobot_props['right_wheel']['mass']}"
+    mesh ="${ecobot_props['right_wheel']['mesh']}"
+    material= "red"/>
+
+    <!--Xacro:macro to the casterwheels joint to baselink-->
+
+    <xacro:macro name="caster_wheel" params="prefix origin_xyz origin_rpy joint_xyz parent m r material">
+        
+        <!--<joint name="joint_aux${prefix}" type="fixed">
+            <origin xyz="${joint_xyz}" rpy="0.0 0.0 0.0"/>
+            <parent link="${parent}"/>
+            <child link="aux_link${prefix}"/>
+        </joint>
+        <link name="aux_link${prefix}">
+            <visual>
+                <geometry>
+                    <cylinder radius="0.005" length="0.001"/>
+                </geometry>
+                <material name="white"/>
+                <origin xyz="${joint_xyz}" rpy="0.0 0.0 0.0"/>
+            </visual>
+        </link>
+        -->
+        <link name="${prefix}_ball">
+            <inertial>
+                <mass value="${m}"/>
+            <inertia ixx="${2.0*m*(r*r)/5.0}" ixy="0.0" ixz="0.0" iyy="${2.0*m*(r*r)/5.0}" iyz="0.0" izz="${2.0*m*(r*r)/5.0}"/>
+            </inertial>
+            <visual >
+                <origin xyz="${origin_xyz}"  rpy="${origin_rpy}"/>
+                <geometry>
+                    <sphere radius="${r}"/>
+                </geometry>
+                <material name="${material}"/>
+            </visual>
+            <collision>
+                <origin xyz="${origin_xyz}"  rpy="${origin_rpy}"/>
+                <geometry>
+                    <sphere radius="${r}"/>
+                </geometry>
+            </collision>
+        </link>
+        <joint name="${prefix}_ball_joint" type="continuous">
+            <origin xyz="${joint_xyz}"  rpy="${origin_rpy}"/>
+            <parent link="${parent}"/>
+            <child link="${prefix}_ball"/>
+            <axis xyz="1.0 0.0 1.0"/>
+            <!--<limit lower="-3.1415" upper="3.1415" effort="1.0" velocity="1.0"/>-->
+        </joint>
+
+        <gazebo reference="${prefix}_ball">
+            <material>Gazebo/DarkGrey</material>
+        </gazebo>
+    </xacro:macro>
+
+    <xacro:caster_wheel prefix= "caster" 
+    origin_xyz= "${caster_wheel_xyz}"
+    origin_rpy= "0.0 0.0 0.0"
+    joint_xyz = "${joint_caster_wheel_xyz}"
+    parent= "base_link"
+    m="${ecobot_props['caster_wheel']['mass']}"
+    r="${ecobot_props['caster_wheel']['radius']}"
+    material="white"/>
+    
+
+    <!--Xacro:macro to the laser joint to baselink-->
+
+    <xacro:macro name="gpu_laser" params="prefix parent mesh r l m origin_xyz origin_rpy joint_xyz dx dy dz"> 
+        <link name="${prefix}_gpu_laser_link">
+            <inertial>
+                <mass value="${m}"/>
+                <inertia ixx="${m*(3*r*r+l*l)/12}" ixy = "0" ixz = "0" 
+                        iyy="${m*(3*r*r+l*l)/12}" iyz = "0" izz="${m*r*r/2}"/>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            </inertial>
+            <visual>
+                <origin xyz="${origin_xyz}" rpy="${origin_rpy}"/>
+                <geometry>
+                    <mesh filename="package://roseco_description/meshes/roseco/${mesh}" />
+                </geometry>
+                <material name="dark_grey"/>
+            </visual>
+            <collision>
+                <origin xyz="${origin_xyz}" rpy="${origin_rpy}"/>
+                <geometry>
+                    <mesh filename="package://roseco_description/meshes/roseco/${mesh}" />
+                </geometry>
+            </collision>
+        </link>
+            
+        <gazebo reference="${prefix}_gpu_laser_link">
+            <material>Gazebo/Grey</material>
+        </gazebo>
+
+        <joint name="${prefix}_gpu_laser_joint" type="fixed">
+            <parent link="${parent}"/>
+            <child link="${prefix}_gpu_laser_link"/>
+            <origin xyz="${dx} ${dy} ${dz}" rpy="0.0 0.0 0.0"/>
+            <axis xyz="0.0 1.0 0.0" />
+        </joint>
+
+        <!-- hokuyo gazebo references -->
+        <gazebo reference="${prefix}_gpu_laser_link">
+            <sensor type="gpu_ray" name="head_hokuyo_sensor">
+            <pose>0 0 0 0 0 0</pose>
+            <visualize>true</visualize>
+            <update_rate>40</update_rate>
+            <ray>
+                <scan>
+                    <horizontal>
+                        <samples>720</samples>
+                        <resolution>1</resolution>
+                        <min_angle>-3.1415</min_angle>
+                        <max_angle>3.1415</max_angle>
+                    </horizontal>
+                </scan>
+                <range>
+                    <min>0.10</min>
+                    <max>30.0</max>
+                    <resolution>0.01</resolution>
+                </range>
+                <noise>
+                    <type>gaussian</type>
+                    <!--Noise parameters based on published spec for Hokuyo laser
+                        achieving "+-30mm" accuracy at range < 10m.  A mean of 0.0m and
+                        stddev of 0.01m will put 99.7% of samples within 0.03m of the true
+                        reading. --> 
+                    <mean>0.0</mean>
+                    <stddev>0.01</stddev>
+                </noise>
+            </ray>
+            <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_gpu_laser.so">
+                <topicName>/roseco/scan</topicName>
+                <frameName>${prefix}_gpu_laser_link</frameName>
+            </plugin>
+            </sensor>
+        </gazebo>
+
+    </xacro:macro>
+
+    <xacro:gpu_laser prefix= "rplidar"
+    parent = "base_link"
+    mesh = "${sensor_props['gpu_laser']['mesh']}"
+    r = "${sensor_props['gpu_laser']['radius']}" 
+    l = "${sensor_props['gpu_laser']['lenght']}" 
+    m = "${sensor_props['gpu_laser']['mass']}"
+    origin_xyz= "${laser_xyz}"
+    origin_rpy= "0.0 0.0 0.0"
+    joint_xyz = "${joint_laser_xyz}"
+    dx = "${sensor_props['gpu_laser']['dx']}"
+    dy = "${sensor_props['gpu_laser']['dy']}"
+    dz = "${sensor_props['gpu_laser']['dz']}"/>
+
+    <!--Xacro:macro the camera-->
+    <xacro:macro name="camera" params="prefix parent m x y z mesh origin_xyz origin_rpy joint_xyz material">
+        <link name="${prefix}_link">
+            <inertial>
+                <mass value="${m}" />
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+                <inertia ixx="${m / 12.0 * (y*y + z*z)}" ixy="0.0" ixz="0.0"
+                iyy="${m / 12.0 * (x*x + z*z)}" iyz="0.0" 
+                izz="${m / 12.0 * (x*x + y*y)}"/>
+            </inertial>
+            <visual>
+                <origin xyz="${origin_xyz}" rpy="${origin_rpy}" />
+                <geometry>
+                    <mesh filename="package://roseco_description/meshes/roseco/${mesh}" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="${material}"/>
+            </visual>
+            <collision>
+                <origin xyz="${origin_xyz}" rpy="${origin_rpy}" />
+                <geometry>
+                    <mesh filename="package://roseco_description/meshes/roseco/${mesh}" scale="0.001 0.001 0.001"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <joint name="camera_joint" type="fixed">
+            <parent link="${parent}"/>
+            <child link="${prefix}_link"/>
+            <origin xyz="${joint_xyz}" rpy="0.0 0.0 0.0"/>
+            <axis xyz="0 0 1" />
+        </joint>
+
+        <gazebo reference="${prefix}_link">
+            <sensor type="camera" name="camera_sensor">
+                <update_rate>30.0</update_rate>
+                <camera>
+                    <horizontal_fov>1.2962634</horizontal_fov>
+                    <image>
+                        <format>R8G8B8</format>
+                        <width>640</width>
+                        <height>480</height>
+                    </image>
+                    <clip>
+                        <near>0.02</near>
+                        <far>300</far>
+                    </clip>
+                    <noise>
+                        <type>gaussian</type>
+                        <!-- Noise is sampled independently per pixel on each frame.
+                            That pixel's noise value is added to each of its color
+                            channels, which at that point lie in the range [0,1]. -->
+                        <mean>0.0</mean>
+                        <stddev>0.007</stddev>
+                    </noise>
+                </camera>
+
+                <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+                <alwaysOn>true</alwaysOn>
+                <updateRate>0.0</updateRate>
+                <cameraName>roseco_sensor/camera</cameraName>
+                <imageTopicName>image_raw</imageTopicName>
+                <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+                <frameName>${prefix}_link</frameName>
+                <hackBaseline>0.07</hackBaseline>
+                <distortionK1>0.0</distortionK1>
+                <distortionK2>0.0</distortionK2>
+                <distortionK3>0.0</distortionK3>
+                <distortionT1>0.0</distortionT1>
+                <distortionT2>0.0</distortionT2>
+                </plugin>
+            </sensor>
+        </gazebo>
+    </xacro:macro>
+
+    <xacro:camera prefix = "camera"
+    parent= "base_link"
+    m = "${sensor_props['camera']['mass']}"
+    x = "${sensor_props['camera']['x_size']}" 
+    y = "${sensor_props['camera']['y_size']}"
+    z = "${sensor_props['camera']['z_size']}"
+    mesh = "${sensor_props['camera']['mesh']}"
+    origin_xyz ="${camera_xyz}"
+    origin_rpy ="0.0 0.0 0.0"
+    joint_xyz ="${joint_camera_xyz}"
+    material = "green"  />
+
+</robot>
