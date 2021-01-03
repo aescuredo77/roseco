@@ -35,7 +35,7 @@ The robot type is a diff-robot with two driving wheels and a caster wheel.
 
 - Navigation next update
 
-![image info](./roseco/pictures/roseco_pre.png)
+![image info](./pictures/roseco_pre.png)
 
 ## Update ##
 
