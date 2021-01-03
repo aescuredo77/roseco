@@ -115,4 +115,6 @@ The encoder gives 12 points per turn, which must be multiplied by the reduction 
 
 If you need more powerful motors or those that require a greater workload, there is a version of these servos with an independent power supply from the motors.
 
+## Arduino library ##
 
+In the Electronics folder is the MotorA library for arduino/teensy
