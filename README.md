@@ -3,7 +3,7 @@ Roseco: Diff-Robot base in ROS
 
 This repository hosts the source code for the ROS < ROSECo > package.
 
- ![image info](./roseco/pictures/roseco3.jpg)
+ ![image info](./pictures/roseco3.jpg)
 
 This is part of the practices that I am doing in the course MAstering Robot orerating System ROS in the ROBOCADEMY
 
@@ -21,7 +21,7 @@ The robot type is a diff-robot with two driving wheels and a caster wheel.
 - You can add sensors or actuators, giving it great versatility.
 - Optionally you can add a raspberry pi 3 or 4 with camera.
 
-![image info](./roseco/pictures/roseco2.jpg)
+![image info](./pictures/roseco2.jpg)
 
 
 
@@ -48,7 +48,7 @@ The robot type is a diff-robot with two driving wheels and a caster wheel.
 - electronics
 
 
-[![Watch the video](./roseco/pictures/video.png)](https://www.youtube.com/watch?v=kRHV5qrDao4)
+[![Watch the video](./pictures/video.png)](https://www.youtube.com/watch?v=kRHV5qrDao4)
 
 
 
