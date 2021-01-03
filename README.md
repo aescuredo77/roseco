@@ -77,7 +77,7 @@ Then build the workspace with `catkin_make`.
  
  **ServoMotor model for Ecology20 and detail of the interior circuit** 
  
-The servomotor consists of a controller board with a PIC16f1503 and a LB1938FA driver, which drive a Pololu &quot;Micro-metal-gearmotors&quot; type reduction motor. The reduction of the motors is based on the need:
+The servomotor consists of a controller board with a PIC16f1503 and a LB1938FA driver, which drive a Pololu &quot;Micro-metal-gearmotors&quot; type reduction motor. The reduction of the motors is based on the need for example:
 
 - 100: 1, 130 rpm
 - 298:1, 45 rpm
@@ -86,8 +86,8 @@ The microcontroller communicates through I2C, which allows us to connect 127 nod
 
 The I2c address will depend on the application that we are going to make, it should not be a problem to change it depending on the needs, but we are going to give a few premises. The I2C addresses are defined by 7 bits, the least significant bit tells us if it is writing or reading, so we will give a couple of addresses, the first is the one recorded in the pic, and the other is the one we will use in the Arduino / teensy to communicate. Always in Hexadecinal.
 
-- Servomotor right 0x20 ? 0x10
-- Servomotor left 0x22 ? 0x11
+- Servomotor right 0x20 --> 0x10
+- Servomotor left 0x22 --> 0x11
 
 ### Driver
 
