@@ -73,7 +73,7 @@ Then build the workspace with `catkin_make`.
  
 ## Electronics : Servo motor with I2C## 
 
-| ![](./electronics/pictures/detail_servo_00.png)
+| ![](./Electronics/pictures/detail_servo_00.png)
  |
 | --- |
 | **ServoMotor model for Ecology20 and detail of the interior circuit** |
@@ -94,7 +94,7 @@ The I2c address will depend on the application that we are going to make, it sho
 
 El driver el chip [LB1938FA](https://www.dropbox.com/s/l5har1ai8nknbxs/LB1938FA.pdf?dl=0), es un driver configurado en puente-H que nos permite controlar el motor en velocidad y dirección con solo dos inputs. Analizando el driver que llevan los servomotores de DFRobot, el L9110S busque alternativas pues el susodicho driver esta un poco descatalogado o solo se vende en páginas de dudosa fiabilidad.
 
-| ![](./electronics/pictures/detail_driver_00.png)
+| ![](./Electronics/pictures/detail_driver_00.png)
  |
 | --- |
 | **LB1938FA is the cousin of the L9110S carried by Dfrobotics servos.** |
@@ -105,7 +105,7 @@ El driver el chip [LB1938FA](https://www.dropbox.com/s/l5har1ai8nknbxs/LB1938FA.
 
 ### Software
 
-| ![](./electronics/pictures/detail_servo_01.png)
+| ![](./Electronics/pictures/detail_servo_01.png)
  |
 | --- |
 | **Detail of the motor control board** |
