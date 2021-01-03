@@ -1,0 +1,35 @@
+#######################################
+# Syntax Coloring Map For motor Library
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+motor	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+dir		KEYWORD2
+dirSpeed	KEYWORD2
+pos		KEYWORD2
+posSpeed	KEYWORD2
+readpos		KEYWORD2
+clearcount	KEYWORD2
+_delay		KEYWORD2
+DIR 		KEYWORD2
+DIRSPEED 	KEYWORD2
+POS 		KEYWORD2
+POSSPEED 	KEYWORD2
+READPOS 		KEYWORD2
+CLEAR 		KEYWORD2
+MOTOR_RIGHT 	KEYWORD2
+MOTOR_LEFT 	KEYWORD2
+LIDAR 		KEYWORD2
+GRIPPER 	KEYWORD2
+ARM_BASE 	KEYWORD2
+ARM_RIGHT 	KEYWORD2
+ARM_LEFT 	KEYWORD2
+
