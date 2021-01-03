@@ -73,12 +73,10 @@ Then build the workspace with `catkin_make`.
  
 ## Electronics : Servo motor with I2C## 
 
-| ![](./Electronics/pictures/detail_servo_00.png)
- |
-| --- |
-| --- |
-| **ServoMotor model for Ecology20 and detail of the interior circuit** |
-
+ ![](./Electronics/pictures/detail_servo_00.png)
+ 
+ **ServoMotor model for Ecology20 and detail of the interior circuit** 
+ 
 The servomotor consists of a controller board with a PIC16f1503 and a LB1938FA driver, which drive a Pololu &quot;Micro-metal-gearmotors&quot; type reduction motor. The reduction of the motors is based on the need:
 
 - 100: 1, 130 rpm
