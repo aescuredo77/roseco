@@ -1,3 +1,4 @@
+
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="roseco">
     <material name="blue">
@@ -119,7 +120,7 @@
     <!-- origin_xyz = "${ecobot_props['base']['x_offset']} ${ecobot_props['base']['y_offset']} ${ecobot_props['base']['z_offset'] - ecobot_props['left_wheel']['radius'] - ecobot_props['left_wheel']['z_offset']} "-->
     <!--Xacro:macro to the parts joint to base_link-->
 
-    <xacro:macro name="fixed" params="prefix origin_xyz origin_rpy joint_xyz m x y z mesh material">
+    <xacro:macro name="fixed" params="prefix origin_xyz origin_rpy joint_xyz m x y z mesh material gazebo_material">
         <!--<joint name="joint_aux${prefix}" type="fixed">
             <origin xyz="${joint_xyz}" rpy="0.0 0.0 0.0"/>
             <parent link="base_link"/>
@@ -165,7 +166,7 @@
             <axis xyz="1 0 0" rpy="0 0 0" />
         </joint>
         <gazebo reference="${prefix}_link">
-            <material>Gazebo/SkyBlue</material>
+            <material>${gazebo_material}</material>
             <turnGravityOff>false</turnGravityOff>
         </gazebo>
     </xacro:macro>
@@ -180,7 +181,8 @@
     y= "${ecobot_props['electronics']['y_size']}"   
     z= "${ecobot_props['electronics']['z_size']}"
     mesh= "${ecobot_props['electronics']['mesh']}"
-    material="green"/>
+    material="green"
+    gazebo_material="Gazebo/Green"/>
 
 
     <xacro:fixed prefix= "chassis" 
@@ -192,7 +194,8 @@
     y= "${ecobot_props['chassis']['y_size']}"   
     z= "${ecobot_props['chassis']['z_size']}"
     mesh= "${ecobot_props['chassis']['mesh']}"
-    material="white"/>
+    material="white"
+    gazebo_material="Gazebo/Yellow"/>
     
 
     <xacro:fixed prefix= "left_motor" 
@@ -204,7 +207,8 @@
     y= "${ecobot_props['left_motor']['y_size']}"   
     z= "${ecobot_props['left_motor']['z_size']}"
     mesh= "${ecobot_props['left_motor']['mesh']}"
-    material="black"/>
+    material="black"
+    gazebo_material="Gazebo/Black"/>
     
     <xacro:fixed prefix= "right_motor" 
     origin_xyz= "${o_right_motor_xyz}"
@@ -215,7 +219,8 @@
     y= "${ecobot_props['right_motor']['y_size']}"   
     z= "${ecobot_props['right_motor']['z_size']}"
     mesh= "${ecobot_props['right_motor']['mesh']}"
-    material="black"/>
+    material="black"
+    gazebo_material="Gazebo/Black"/>
 
     <!--Xacro:macro to the wheels joint to motors-->
 
@@ -259,11 +264,13 @@
             </collision>
         </link>
         <gazebo reference="${prefix}_wheel_link">
-            <mu1 value="1.0"/>
-            <mu2 value="1.0"/>
-            <kp value="10000000.0"/>
-            <kd value="1.0"/>
-            <fdir1 value="1 0 0"/>
+            <mu1>0.1</mu1>
+            <mu2>0.1</mu2>
+            <kp>500000.0</kp>
+            <kd>10.0</kd>
+            <minDepth>0.001</minDepth>
+            <maxVel>0.1</maxVel>
+            <fdir1>1 0 0</fdir1>
             <material>Gazebo/Grey</material>
             <turnGravityOff>false</turnGravityOff>
         </gazebo>
@@ -277,10 +284,10 @@
         <transmission name="${prefix}_wheel_transmission">
             <type>transmission_interface/SimpleTransmission</type>
             <joint name="${prefix}_wheel_joint">
-                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+                <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
             </joint>
             <actuator name="${prefix}_motor_link">
-                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+                <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
                 <mechanicalReduction>1</mechanicalReduction>
             </actuator>
         </transmission>
@@ -357,6 +364,12 @@
         </joint>
 
         <gazebo reference="${prefix}_ball">
+            <mu1>0.1</mu1>
+            <mu2>0.1</mu2>
+            <kp>1000000.0</kp>
+            <kd>100.0</kd>
+            <minDepth>0.001</minDepth>
+            <maxVel>1.0</maxVel>
             <material>Gazebo/DarkGrey</material>
         </gazebo>
     </xacro:macro>
