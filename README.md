@@ -91,7 +91,7 @@ The I2c address will depend on the application that we are going to make, it sho
 
 ### Driver
 
-El driver el chip [LB1938FA](https://www.dropbox.com/s/l5har1ai8nknbxs/LB1938FA.pdf?dl=0), es un driver configurado en puente-H que nos permite controlar el motor en velocidad y dirección con solo dos inputs. Analizando el driver que llevan los servomotores de DFRobot, el L9110S busque alternativas pues el susodicho driver esta un poco descatalogado o solo se vende en páginas de dudosa fiabilidad.
+The driver is [LB1938FA](https://www.dropbox.com/s/l5har1ai8nknbxs/LB1938FA.pdf?dl=0), It is a driver configured in H-bridge that allows us to control the motor in speed and direction with only two inputs. Analyzing the driver that the DFRobot servomotors carry, the L9110S looks for alternatives because the aforementioned driver is a little out of print or is only sold on pages of doubtful reliability.
 
  ![](./Electronics/pictures/detail_driver_00.png)
 
